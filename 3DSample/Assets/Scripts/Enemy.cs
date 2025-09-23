@@ -24,4 +24,14 @@ public class Enemy : MonoBehaviour
         transform.position += direction * moveSpeed * Time.deltaTime;
         transform.LookAt(player.position);
     }
+
+    public void TakeDamage(float damage)
+    {
+        enemyHp -= damage; // 체력에서 데미지 깎기
+        if (enemyHp <= 0)
+        {
+            Destroy(gameObject); // 체력이 0 이하면 적을 파괴합니다.
+        }
+    }
+
 }
