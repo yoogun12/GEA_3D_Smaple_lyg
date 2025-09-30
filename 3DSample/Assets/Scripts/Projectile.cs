@@ -9,7 +9,7 @@ public class Projectile : MonoBehaviour
 
     public float lifeTime = 2f;     //생존 시간 (초)
 
-    public float damage = 1f;
+    public int damage = 1;
 
     void Start()
     {

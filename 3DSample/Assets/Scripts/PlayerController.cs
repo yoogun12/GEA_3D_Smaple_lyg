@@ -1,5 +1,6 @@
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -25,20 +26,36 @@ public class PlayerController : MonoBehaviour
 
     public CinemachineSwitcher Cs;
 
+    public int maxHP = 100;
+    private int currentHP;
+
+    public Slider hpSlider;
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
         pov = virtualCam.GetCinemachineComponent<CinemachinePOV>();
+
+        currentHP = maxHP;
+        hpSlider.value = 1f;
     }
 
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            pov.m_HorizontalAxis.Value = transform.eulerAngles.y;
+            pov.m_VerticalAxis.Value = 0f;
+        }
+
+
+
         isGrounded = controller.isGrounded;
         if (isGrounded && velocity.y < 0)
         {
-            velocity.y = -2f;    
+            velocity.y = -2f;
         }
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
@@ -52,8 +69,8 @@ public class PlayerController : MonoBehaviour
         camRight.Normalize();
 
         Vector3 move = (camForward * z + camRight * x).normalized;
-        if(!Cs.usingFreeLook)
-        controller.Move(move * speed * Time.deltaTime);
+        if (!Cs.usingFreeLook)
+            controller.Move(move * speed * Time.deltaTime);
 
         float cameraYaw = pov.m_HorizontalAxis.Value;
         Quaternion targetRot = Quaternion.Euler(0f, cameraYaw, 0f);
@@ -66,7 +83,7 @@ public class PlayerController : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
-        if(Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
             speed = 10f;
             jumpPower = 7f;
@@ -79,7 +96,23 @@ public class PlayerController : MonoBehaviour
             virtualCam.m_Lens.FieldOfView = 60f;
         }
 
-      
+
 
     }
+
+    public void TakeDamage(int damage)
+    {
+        currentHP -= damage; // 체력에서 데미지 깎기
+        hpSlider.value = (float)currentHP / maxHP;
+        if (currentHP <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
+    }
+
 }
