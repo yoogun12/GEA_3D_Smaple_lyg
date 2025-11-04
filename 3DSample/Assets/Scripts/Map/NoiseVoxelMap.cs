@@ -15,6 +15,7 @@ public class NoiseVoxelMap : MonoBehaviour
     public int width = 20;              //가로
     public int depth = 20;              //깊이
     public int maxheight = 16;          //최대 높이
+    public int waterLevel = 3;          //물 높이
 
     [SerializeField] float noiseScale = 20f;
 
@@ -47,8 +48,15 @@ public class NoiseVoxelMap : MonoBehaviour
                         GrassPlace(x, y, z);
                     }
                     else Place(x, y, z);
-                   
-              
+                }
+                                                                                                                                                                     
+                if (h < waterLevel)
+                {
+                    // h보다 높은 곳부터 seaLevel까지 물로 채움                
+                    for (int y = h + 1; y <= waterLevel; y++)                  
+                    {           
+                        WaterPlace(x, y, z);                                
+                    }
                 }
 
             }
