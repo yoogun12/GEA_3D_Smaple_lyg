@@ -17,6 +17,7 @@ public class PlayerHarvester : MonoBehaviour
     private Camera _cam;
 
     public Inventory inventory;                 // 플레이어 인벤(없으면 자동 부착)
+    public InventoryUI inventoryUI;         // 인벤토리 UI
 
     void Awake()
     {
@@ -38,6 +39,9 @@ public class PlayerHarvester : MonoBehaviour
                 {
                     block.Hit(toolDamage, inventory);
                 }
+
+                if (inventoryUI != null)
+                    inventoryUI.UpdateInventoryUI();
             }
 
         }
