@@ -99,4 +99,21 @@ public class NoiseVoxelMap : MonoBehaviour
         b.mineable = true;
     }
 
+    public void PlaceTile(Vector3Int pos, BlockType type)
+    {
+        switch (type)
+        {
+            case BlockType.Dirt:
+                Place(pos.x, pos.y, pos.z);
+                break;
+            case BlockType.Grass:
+                GrassPlace(pos.x, pos.y, pos.z);
+                break;
+            case BlockType.Water:
+                WaterPlace(pos.x, pos.y, pos.z);
+                break;
+
+        }
+    }
+
 }

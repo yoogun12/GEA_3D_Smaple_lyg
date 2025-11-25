@@ -8,12 +8,13 @@ public class SlotItemPrefabs : MonoBehaviour
 {
     public Image itemImage;
     public TextMeshProUGUI itemText;
+    public BlockType blockType; 
 
-    public void ItemSetting(Sprite itemSprite, string txt)
+    public void ItemSetting(Sprite itemSprite, string txt, BlockType type)
     {
         itemImage.sprite = itemSprite;
-        itemImage.enabled = (itemSprite != null);
         itemText.text = txt;
+        blockType = type;
     }
 
     
