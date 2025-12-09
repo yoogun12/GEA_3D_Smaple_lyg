@@ -19,7 +19,9 @@ public class PlayerHarvester : MonoBehaviour
     public Inventory inventory;                 // 플레이어 인벤(없으면 자동 부착)
     InventoryUI invenUI;
 
-    public GameObject selectedBlock;    
+    public GameObject selectedBlock;
+
+    public ItemType itemType;
 
     void Awake()
     {
@@ -30,9 +32,12 @@ public class PlayerHarvester : MonoBehaviour
 
     void Update()
     {
+
         if (invenUI.selectedIndex < 0)
         {
             selectedBlock.transform.localScale = Vector3.zero;
+
+ 
 
             if (Input.GetMouseButton(0) && Time.time >= _nextHitTime)
             {
@@ -73,12 +78,31 @@ public class PlayerHarvester : MonoBehaviour
                 {
                     Vector3Int placePos = AdjacentCellOnHitFace(hit);
 
-                    BlockType selected = invenUI.GetInventorySlot();
+                    ItemType selected = invenUI.GetInventorySlot();
                     if (inventory.Consume(selected, 1))
                     {
                         FindObjectOfType<NoiseVoxelMap>().PlaceTile(placePos, selected);
                     }
                 }
+            }
+        }
+        if(invenUI.selectedIndex < 0)
+        {
+            
+        }
+        else
+        {
+            switch(invenUI.GetInventorySlot())
+            {
+                case ItemType.Axe:
+                    toolDamage = 3;
+                    break;
+                case ItemType.SuperAxe:
+                    toolDamage = 5;
+                    break;
+                case ItemType.SuperSuperAxe:
+                    toolDamage = 20;
+                    break;
             }
         }
     }

@@ -8,6 +8,9 @@ public class InventoryUI : MonoBehaviour
     public Sprite dirtSprite;
     public Sprite grassSprite;
     public Sprite waterSprite;
+    public Sprite axeSprite;
+    public Sprite superAxeSprite;
+    public Sprite superSuperAxeSprite;
 
     public List<Transform> Slot = new List<Transform>();
     public GameObject SlotItem;
@@ -33,14 +36,23 @@ public class InventoryUI : MonoBehaviour
 
             switch (item.Key)
             {
-                case BlockType.Dirt:
+                case ItemType.Dirt:
                     sItem.ItemSetting(dirtSprite, "x" + item.Value.ToString(), item.Key);
                     break;
-                case BlockType.Grass:
+                case ItemType.Grass:
                     sItem.ItemSetting(grassSprite, "x" + item.Value.ToString(), item.Key);
                     break;
-                case BlockType.Water:
+                case ItemType.Water:
                     sItem.ItemSetting(waterSprite, "x" + item.Value.ToString(), item.Key);
+                    break;
+                case ItemType.Axe:
+                    sItem.ItemSetting(axeSprite, "x" + item.Value.ToString(), item.Key);
+                    break;
+                case ItemType.SuperAxe:
+                    sItem.ItemSetting(superAxeSprite, "x" + item.Value.ToString(), item.Key);
+                    break;
+                case ItemType.SuperSuperAxe:
+                    sItem.ItemSetting(superSuperAxeSprite, "x" + item.Value.ToString(), item.Key);
                     break;
             }
 
@@ -93,8 +105,8 @@ public class InventoryUI : MonoBehaviour
         Slot[_idx].GetComponent<Image>().color = Color.yellow;
     }
     
-    public BlockType GetInventorySlot()
+    public ItemType GetInventorySlot()
     {
-        return items[selectedIndex].GetComponent<SlotItemPrefabs>().blockType;
+        return items[selectedIndex].GetComponent<SlotItemPrefabs>().itemType;
     }
 }
